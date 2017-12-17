@@ -1,0 +1,20 @@
+<header>
+  <nav>
+    <%= link_to 'pilipili', root_path, class: 'logo' %>
+
+    <div class="navlinks">
+      <%= link_to 'new', newest_links_path %>
+      <%= link_to 'comments', comments_path %>
+
+      <% unless logged_in? %>
+          <%= link_to 'signup', new_user_path %>
+          <%= link_to 'login', new_session_path %>
+      <% end %>
+
+      <% if logged_in? %>
+          <%= link_to 'submit a link', new_link_path %>
+          <%= link_to 'logout', sessions_path, method: :delete %>
+      <% end %>
+    </div>
+  </nav>
+</header>

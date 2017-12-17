@@ -1,0 +1,64 @@
+<section class="link-thread">
+  <header>
+    <%= render @link %>
+
+    <% if @link.description? %>
+        <p>
+          <%= @link.description %>
+        </p>
+    <% end %>
+
+  </header>
+
+  <%= if logged_in? %>
+      <div class="add-comment row">
+        <div class="col-sm-6">
+          <%= form_for :comment, url: link_comments_path(@link) do |f| %>
+              <div class="form-group">
+                <%= f.text_area :body, class: 'form-control', placeholder: 'The quick brown fox...', rows: 10, required: true %>
+              </div>
+
+              <div class="form-group">
+                <%= f.button 'add comment', class: 'btn btn-success' %>
+              </div>
+          <% end %>
+        </div>
+      </div>
+  <% end %>
+
+  <div class="all-comments row">
+    <div class="col-sm-12">
+      <% if @comments.present? %>
+          <h3>
+            Comments
+          </h3>
+      <% end %>
+      <% @comments.each do |comment| %>
+          <div class="comment">
+            <p class="comment-owner">
+              <strong>
+                <%= comment.user.username %>
+              </strong>
+
+              <span class="comment-created small">
+            <%= time_ago_in_words(comment.created_at) %> ago
+          </span>
+              <% if logged_in? && current_user.owns_comment?(comment) %>
+              <span class="edit-commit">
+                <%= link_to 'edit', edit_link_comment_path(@link, comment) %>
+              </span>
+
+                  <span class="delete-comment">
+                    <%= link_to 'delete', link_comment_path(@link, comment), method: :delete, data: { comfirm: 'Are you sure?' } %>
+                  </span>
+              <% end %>
+            </p>
+
+            <p>
+              <%= comment.body %>
+            </p>
+          </div>
+      <% end %>
+    </div>
+  </div>
+</section>

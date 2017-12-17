@@ -1,0 +1,40 @@
+<div class="link">
+  <div class="title">
+    <%= link_to link.title, (link.url? ? link.url : link) %>
+
+    <% if link.url? %>
+          <span>
+            ( <%= link.url %> )
+          </span>
+    <% end %>
+  </div>
+
+  <div class="metadata">
+    <span class="points">
+          <%= pluralize(link.points, 'point') %> by <%= link.user.username %>
+    </span>
+    <span class="time-created">
+          <%= time_ago_in_words(link.created_at) %> ago
+    </span>
+    <span class="comment-count">
+          <%= link_to pluralize(link.comment_count, 'comment'), link %>
+    </span>
+    <% if logged_in? && current_user.owns_link?(link) %>
+          <span class="edit-link">
+            <%= link_to 'edit', edit_link_path(link) %>
+          </span>
+
+        <span class="delete-link">
+            <%= link_to 'delete', link, method: :delete, data: { confirm: 'Are you sure?' } %>
+          </span>
+    <% end %>
+    <% if logged_in? %>
+        <span class="upvote-link">
+          <%= link_to "upvote (#{link.upvotes})", upvote_link_path(link), method: :post %>
+        </span>
+        <span class="downvote-link">
+          <%= link_to "downvote (#{link.downvotes})", downvote_link_path(link), method: :post %>
+        </span>
+    <% end %>
+  </div>
+</div>

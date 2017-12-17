@@ -10,7 +10,7 @@
 
   </header>
 
-  <%= if logged_in? %>
+  <% if logged_in? %>
       <div class="add-comment row">
         <div class="col-sm-6">
           <%= form_for :comment, url: link_comments_path(@link) do |f| %>

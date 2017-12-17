@@ -12,7 +12,7 @@
 
           <% if logged_in? && current_user.owns_comment?(comment) %>
       <span class="edit-comment">
-        <%= link_to 'edit', edit_comment_path(comment.link, comment) %>
+        <%= link_to 'edit', edit_link_comment_path(comment.link, comment) %>
       </span>
 
               <span class="delete-comment">

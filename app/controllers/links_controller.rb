@@ -7,7 +7,7 @@ class LinksController < ApplicationController
   end
 
   def newest
-    @newest = Link.newest
+    @links = Link.newest
   end
 
   def new
